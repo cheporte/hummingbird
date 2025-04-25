@@ -1,7 +1,10 @@
 import { useState} from "react";
 import { View, TextInput, Button, Image, Text } from 'react-native';
 
+import ProfileButton from "../components/ProfileButton";
+
 import styles from "../styles/createPost";
+import theme from "../constants/theme";
 
 export default function CreatePost() {
     const [text, setText] = useState<string>("");
@@ -10,19 +13,22 @@ export default function CreatePost() {
     // TODO: replace with expo image picker
     const fakeImage = 'https://placekitten.com/302/200'
 
+    const submitPost = () => {
+        alert("Submitted <3");
+    }
+
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Write your chirrp 🐤</Text>
+            <Text style={styles.title}>Compose your chirp 🎶</Text>
             <TextInput
-                placeholder="Your poetic thought..."
-                value={text}
-                onChangeText={setText}
                 style={styles.input}
                 multiline
+                placeholder="Say something beautiful..."
+                placeholderTextColor={theme.colors.textLight}
+                value={text}
+                onChangeText={setText}
             />
-            <Button title="Pick Image" onPress={() => setImage(fakeImage)}/>
-            {image && (<Image source={{uri: image }} style={styles.image}/>)}
-            <Button title="Chirr It" onPress={() => alert("Not yet functional 😅")}/>
+            <ProfileButton title="Post ✨" onPress={submitPost} />
         </View>
     );
 }

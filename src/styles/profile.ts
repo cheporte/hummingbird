@@ -1,26 +1,50 @@
 import { StyleSheet } from "react-native";
+import theme from "../constants/theme";
 
-export default StyleSheet.create({
+const styles = StyleSheet.create({
     container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        padding: theme.spacing.lg,
         alignItems: "center",
-        padding: 20,
     },
     avatar: {
-        width: 100,
-        height: 100,
-        borderRadius: 50,
-        marginBottom: 12,
+        width: 120,
+        height: 120,
+        borderRadius: 60,
+        marginBottom: theme.spacing.md,
+        borderWidth: 2,
+        borderColor: theme.colors.primary,
     },
     name: {
-        fontSize: 22,
-        fontWeight: "bold",
+        fontSize: theme.fontSizes.lg,
+        fontWeight: "700",
+        color: theme.colors.textDark,
     },
     username: {
-        fontSize: 16,
-        color: "#666",
+        fontSize: theme.fontSizes.md,
+        color: theme.colors.textLight,
+        marginBottom: theme.spacing.sm,
     },
     bio: {
-        marginTop: 10,
+        fontSize: theme.fontSizes.md,
+        color: theme.colors.textDark,
         textAlign: "center",
+        marginBottom: theme.spacing.lg,
+    },
+    input: {
+        width: "100%",
+        backgroundColor: theme.colors.white,
+        padding: theme.spacing.sm,
+        borderRadius: theme.radius.sm,
+        borderColor: theme.colors.border,
+        borderWidth: 1,
+        marginBottom: theme.spacing.sm,
+    },
+    textArea: {
+        height: 100,
+        textAlignVertical: "top",
     },
 });
+
+export default styles;

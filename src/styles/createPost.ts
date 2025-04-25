@@ -1,21 +1,18 @@
 import { StyleSheet } from "react-native";
 
+import theme from "../constants/theme";
+
 export default StyleSheet.create({
-    container: { flex: 1, padding: 20 },
-    title: { fontSize: 20, marginBottom: 10 },
     input: {
-        borderWidth: 1,
-        borderColor: "#ccc",
-        padding: 12,
-        borderRadius: 8,
-        marginBottom: 10,
+        backgroundColor: theme.colors.white,
+        padding: theme.spacing.md,
+        borderRadius: theme.radius.md,
+        fontSize: theme.fontSizes.md,
+        color: theme.colors.textDark,
+        height: 120,
         textAlignVertical: "top",
-        minHeight: 100,
-    },
-    image: {
-        width: "100%",
-        height: 200,
-        marginVertical: 10,
-        borderRadius: 10,
+        borderWidth: 1,
+        borderColor: theme.colors.border,
+        marginBottom: theme.spacing.md,
     },
 });
