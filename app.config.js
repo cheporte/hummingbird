@@ -5,6 +5,7 @@ export default {
         name: "Hummingbird",
         slug: "hummingbird",
         version: "1.0.0",
+        assetBundlePatterns: ["**/*"],
         extra: {
             firebaseApiKey: process.env.FIREBASE_API_KEY,
             firebaseAuthDomain: process.env.FIREBASE_AUTH_DOMAIN,
