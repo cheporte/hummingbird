@@ -1,13 +1,15 @@
+import Colors from "./colors";
+
 const theme = {
     colors: {
-        background: "#E0F7FA",        // Soft Sky Blue
-        primary: "#6FCF97",           // Hummingbird Green
-        secondary: "#F9A8D4",         // Blossom Pink
-        textDark: "#2E2E2E",          // Midnight Charcoal
-        textLight: "#9CA3AF",         // Cloud Gray
-        button: "#C4B5FD",            // Lilac Lavender
-        border: "#B2EBF2",            // Misty Cyan
-        white: "#FFFFFF",
+        background: Colors.background,            // Soft Sky Blue
+        primary: Colors.primary,                  // Hummingbird Green
+        secondary: Colors.secondary,              // Blossom Pink
+        textDark: Colors.textDark,                // Midnight Charcoal
+        textLight: Colors.textLight,              // Cloud Gray
+        button: Colors.button,                    // Lilac Lavender
+        border: Colors.border,                    // Misty Cyan
+        white: '#fff',
     },
 
     spacing: {

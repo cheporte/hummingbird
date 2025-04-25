@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { View, Text, TextInput, Image } from "react-native";
 import styles from "../styles/profile";
+
 import ProfileButton from "../components/ProfileButton";
+import ImageSelectButton from "../components/ImageSelectButton";
+
+import * as ImagePicker from "expo-image-picker";
 
 export default function Profile() {
     const [isEditing, setIsEditing] = useState(false);
@@ -9,7 +13,7 @@ export default function Profile() {
     const [name, setName] = useState("Hummy B.");
     const [username, setUsername] = useState("flutterbird");
     const [bio, setBio] = useState("Flutters by, coding high in the sky~ 🐦✨");
-    const [image, setImage] = useState("https://i.imgur.com/Bm8B0BM.png"); // placeholder
+    const [image, setImage] = useState<string | null>(null);
 
     const toggleEdit = () => {
         if (isEditing) {
@@ -19,9 +23,22 @@ export default function Profile() {
         setIsEditing(!isEditing);
     };
 
+    const handleImageChange = async () => {
+        let result = await ImagePicker.launchImageLibraryAsync({
+            mediaTypes: "images",
+            allowsEditing: true,
+            aspect: [1, 1],
+            quality: 1,
+        });
+
+        if (!result.canceled) {
+            setImage(result.assets[0].uri);
+        }
+    };
+
     return (
         <View style={styles.container}>
-            <Image source={{ uri: image }} style={styles.avatar} />
+            {image && <Image source={{uri: image}} style={styles.avatar}/>}
 
             {isEditing ? (
                 <>
@@ -44,6 +61,8 @@ export default function Profile() {
                         placeholder="Bio"
                         multiline
                     />
+
+                    <ImageSelectButton onPress={handleImageChange}/>
                 </>
             ) : (
                 <>

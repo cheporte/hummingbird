@@ -2,6 +2,8 @@ import { View, Text, FlatList, Image } from "react-native";
 
 import styles from '../styles/feed';
 
+import Chirr from "../components/Chirr";
+
 const mockChirrps = [
     {
         id: "1",
@@ -24,14 +26,8 @@ export default function Feed() {
             data={mockChirrps}
             keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
-                <View style={styles.card}>
-                    <Text style={styles.user}>@{item.user}</Text>
-                    <Text style={styles.text}>@{item.text}</Text>
-                    <Image source={{uri: item.image }} style={styles.image}/>
-                </View>
+                <Chirr text={item.text} user={item.user} image={item.image}/>
             )}
         />
     );
 }
-
-

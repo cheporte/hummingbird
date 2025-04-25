@@ -4,7 +4,7 @@ import theme from "../constants/theme";
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#fff',
+        backgroundColor: theme.colors.white,
         padding: theme.spacing.lg,
         alignItems: "center",
     },
