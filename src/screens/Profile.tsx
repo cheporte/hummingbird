@@ -1,44 +1,68 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { View, Text, TextInput, Image } from "react-native";
+import { auth } from "../services/firebase";
+
 import styles from "../styles/profile";
 
 import ProfileButton from "../components/ProfileButton";
-import ImageSelectButton from "../components/ImageSelectButton";
-
-import * as ImagePicker from "expo-image-picker";
+import { updateUserProfile, getUserProfile } from "../services/firestore";
 
 export default function Profile() {
-    const [isEditing, setIsEditing] = useState(false);
+    const currentUser =  auth.currentUser;
 
+    const [isEditing, setIsEditing] = useState(false);
     const [name, setName] = useState("Hummy B.");
     const [username, setUsername] = useState("flutterbird");
     const [bio, setBio] = useState("Flutters by, coding high in the sky~ 🐦✨");
-    const [image, setImage] = useState<string | null>(null);
+    const [image, setImage] = useState<"profile_light" | "profile_dark">("profile_light");
 
-    const toggleEdit = () => {
+    useEffect(() => {
+        const fetchProfile = async () => {
+            if (currentUser) {
+                const data = await getUserProfile(currentUser.uid);
+                if (data) {
+                    setName(data.name || "Hummy B.");
+                    setUsername(data.username || "flutterbird");
+                    setBio(data.bio || "Flutters by, coding high in the sky~ 🐦✨");
+                    setImage(data.avatarUrl || "profile_light");
+                }
+            }
+        };
+        fetchProfile();
+    }, [currentUser]);
+
+    const toggleAvatar = () => {
+        setImage(prev => (prev === "profile_light" ? "profile_dark" : "profile_light"));
+    };
+
+    const toggleEdit = async () => {
         if (isEditing) {
-            // Saving logic would go here (e.g., Firebase update)
-            console.log("Saved:", { name, username, bio });
+            try {
+                const userId = currentUser?.uid
+                if (userId) {
+                    await updateUserProfile(userId, {
+                        name,
+                        username,
+                        bio,
+                        avatarUrl: image
+                    });
+                    console.log("Profile updated successfully! 🌟");
+                } else {
+                    console.error("No user logged in! 😔");
+                }
+            } catch (error) {
+                console.error("Failed to update profile:", error);
+            }
         }
         setIsEditing(!isEditing);
     };
 
-    const handleImageChange = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: "images",
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 1,
-        });
-
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
-        }
-    };
-
     return (
         <View style={styles.container}>
-            {image && <Image source={{uri: image}} style={styles.avatar}/>}
+            <Image
+                source={image === "profile_light" ? require("../assets/profile_light.jpg") : require("../assets/profile_dark.jpg")}
+                style={styles.avatar}
+            />
 
             {isEditing ? (
                 <>
@@ -61,8 +85,7 @@ export default function Profile() {
                         placeholder="Bio"
                         multiline
                     />
-
-                    <ImageSelectButton onPress={handleImageChange}/>
+                    <ProfileButton onPress={toggleAvatar} title="Change PFP"/>
                 </>
             ) : (
                 <>

@@ -6,6 +6,7 @@ import SubmitPostButton from "../components/SubmitPostButton";
 import AppNavigator from "../navigation/AppNavigator";
 
 import styles from "../styles/authScreens";
+import MainTabs from "../navigation/MainTabs";
 
 // @ts-ignore
 export default function LoginScreen({ navigation }) {
@@ -16,7 +17,6 @@ export default function LoginScreen({ navigation }) {
         try {
             await signInWithEmailAndPassword(auth, email, password);
             Alert.alert("Hummingbird recognized you! 🐦");
-            navigation.replace(AppNavigator);
         } catch (err) {
             console.error(err);
             Alert.alert("Login failed!");

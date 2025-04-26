@@ -6,6 +6,9 @@ export default {
         slug: "hummingbird",
         version: "1.0.0",
         assetBundlePatterns: ["**/*"],
+        android: {
+            permissions: ["INTERNET"]
+        },
         extra: {
             firebaseApiKey: process.env.FIREBASE_API_KEY,
             firebaseAuthDomain: process.env.FIREBASE_AUTH_DOMAIN,

@@ -13,7 +13,16 @@ const styles = StyleSheet.create({
     },
     user: { fontWeight: "bold", marginBottom: 4 },
     text: { fontSize: 16, marginBottom: 8 },
-    image: { width: "100%", height: 180, borderRadius: 10 },
+    avatar: {
+        width: 40,
+        height: 40,
+        borderRadius: 20,
+        marginRight: 10,
+    },
+    content: {
+        flex: 1,
+        flexDirection: "column",
+    },
 });
 
 export default styles;

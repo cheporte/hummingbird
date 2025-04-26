@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ActivityIndicator } from "react-native";
+import { View, Text, ActivityIndicator } from "react-native";
 import styles from "../styles/splashScreen";
 import theme from "../constants/theme";
 

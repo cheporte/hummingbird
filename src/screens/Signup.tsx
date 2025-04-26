@@ -3,8 +3,7 @@ import {Text, View, TextInput, Alert, TouchableOpacity} from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../services/firebase";
 import SubmitPostButton from "../components/SubmitPostButton";
-import AppNavigator from "../navigation/AppNavigator";
-
+import { createUserProfile} from "../services/firestore";
 import styles from "../styles/authScreens";
 
 // @ts-ignore
@@ -14,9 +13,10 @@ export default function SignupScreen({ navigation }) {
 
     const handleSignup = async () => {
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            Alert.alert("Welcome to Hummingbird! 🐦");
-            navigation.replace(AppNavigator);
+            const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+            const user = userCredentials.user
+
+            await createUserProfile(user.uid, "flutterbird", "flutterbird123", "Dreaming on the wind 🌬️")
         } catch (err) {
             console.error(err);
             Alert.alert("Signup failed!");

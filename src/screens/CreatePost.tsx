@@ -1,4 +1,4 @@
-import { useState} from "react";
+import { useState } from "react";
 import { View, TextInput, Image, Text } from 'react-native';
 
 import ImageSelectButton from "../components/ImageSelectButton";
@@ -7,26 +7,32 @@ import SubmitPostButton from "../components/SubmitPostButton";
 import styles from "../styles/createPost";
 import theme from "../constants/theme";
 
-import * as ImagePicker from 'expo-image-picker';
+import { createPost } from "../services/firestore";
 
 export default function CreatePost() {
+
     const [text, setText] = useState<string>("");
-    const [image, setImage] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const submitPost = () => {
-        alert("Submitted <3");
-    }
+    const submitPost = async () => {
+        if (!text.trim()) {
+            alert("A silent chirp? Add some text! ✨");
+            return;
+        }
 
-    const handleImageSelect = async () => {
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: "images",
-            allowsEditing: true,
-            aspect: [1, 1],
-            quality: 1,
-        });
+        setIsSubmitting(true); // 🌟 we tell the app "hey, we're busy now!"
+        try {
 
-        if (!result.canceled) {
-            setImage(result.assets[0].uri);
+            await createPost({text});
+
+            alert("Posted successfully 🐤🎉");
+            setText("");
+
+        } catch (err) {
+            console.error("Post failed:", err);
+            alert("Couldn't chirp 😭");
+        } finally {
+            setIsSubmitting(false); // 🌟 and later, "okay boss, we're done!"
         }
     };
 
@@ -42,8 +48,6 @@ export default function CreatePost() {
                     value={text}
                     onChangeText={setText}
                 />
-                {image && <Image source={{uri: image}} style={styles.image}/>}
-                <ImageSelectButton onPress={handleImageSelect} />
             </View>
             <SubmitPostButton onPress={submitPost} />
         </View>

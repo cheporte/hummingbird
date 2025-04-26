@@ -3,7 +3,7 @@ import styles from "../styles/components/submitPostButton";
 
 type Props = {
     onPress: () => void;
-    text: string;
+    text?: string;
 };
 
 export default function SubmitPostButton({ onPress, text="✨ Post Chirp" }: Props) {
